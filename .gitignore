@@ -1,0 +1,14 @@
+
+webinterface/__pycache__/
+
+webinterface/views/__pycache__/
+
+backend/__pycache__/
+
+backend/views/__pycache__/
+
+venv/
+
+webinterface/.vscode/
+
+.vscode/
