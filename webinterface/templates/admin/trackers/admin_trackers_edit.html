@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+{% with title="Admin - Edit Trackers" %}
+{% include '_base_head.html' %}
+{% endwith %}
+
+<body class="text-center">
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+        {% include '_base_header.html' %}
+
+        <main role="main" class="inner cover">
+            <div class="card-group">
+
+                <div class="card text-white bg-dark mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <form method="POST" action="{{tracker['uuid']}}/update">
+                            <div class="form-group">
+                                <label for="nameInput">Name</label>
+                                <input type="text" class="form-control" name="nameInput" id="nameInput"
+                                    placeholder="Name" value="{{tracker['name']}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ownerUuidInput">Owner UUID</label>
+                                <input type="text" class="form-control" name="ownerUuidInput" id="ownerUuidInput"
+                                    placeholder="ownerUuidInput" value="{{tracker['owner_uuid']}}">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                        <form method="POST" action="{{tracker['uuid']}}/update_gps">
+                            <div class="form-group">
+                                <label for="gpsInput">GPS Data</label>
+                                <input type="text" class="form-control" name="gpsInput" id="gpsInput"
+                                    placeholder="3.21,1.23" value="{{tracker_data['gps']}}">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                        <form method="POST" action="{{tracker['uuid']}}/update_hr">
+                            <div class="form-group">
+                                <label for="hrInput">HR Data</label>
+                                <input type="text" class="form-control" name="hrInput" id="hrInput"
+                                    placeholder="100" value="{{tracker_data['hr']}}">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </main>
+        {% include '_base_footer.html' %}
+    </div>
+</body>
+
+</html>

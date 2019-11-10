@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+{% with title="Dashboard - Reminders" %}
+{% include '_base_head.html' %}
+{% endwith %}
+
+<body class="text-center">
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+        {% include '_base_header.html' %}
+
+        <main role="main" class="inner cover">
+            <div class="card-group">
+
+                <div class="card text-white bg-dark mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <form method="POST">
+
+                            
+                            <div class="form-group">
+                                <label for="contentInput">Content</label>
+                                <input type="text" class="form-control" name="contentInput" id="contentInput"
+                                    placeholder="Content">
+                            </div>
+                            <div class="form-group">
+                                <label for="timeInput">Time</label>
+                                <input type="text" class="form-control" name="timeInput" id="timeInput"
+                                    placeholder="Time">
+                            </div>
+                            <fieldset class="form-group">
+                                <legend class="col-form-label pt-0">Device to remind</legend>
+                                
+
+                                {% for g in paired_devices %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="deviceRadio" id="{{g['uuid']}}"
+                                        value="{{g['uuid']}}">
+                                    <label class="form-check-label" for="deviceRadio">
+                                        {{g['name']}}
+                                    </label>
+                                </div>
+                                {% endfor %}
+
+                            </fieldset>
+
+
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            {% for r in rem %}
+            <div class="card-group">
+                <div class="card text-white bg-dark mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{r['content']}}</h5>
+                        <p class="card-text">{{r['time']}}</p>
+                        <p class="card-text">{{r['device_uuids']}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+
+        </main>
+        {% include '_base_footer.html' %}
+    </div>
+</body>
+
+</html>

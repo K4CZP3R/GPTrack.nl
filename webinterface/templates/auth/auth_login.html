@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+{% with title="Login" %}
+{% include '_base_head.html' %}
+{% endwith %}
+
+<body class="text-center">
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+        {% include '_base_header.html' %}
+
+        <main role="main" class="inner cover">
+            <div class="card mb-3 text-white bg-dark" style="max-width: 540px;">
+                <div class="card text-white bg-dark">
+                    <div class="card-header">
+                        Login - {{login_type}}
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                            <div class="form-group">
+                                <label for="emailInput">Email address</label>
+                                <input type="email" class="form-control" name="emailInput" id="emailInput"
+                                    placeholder="example@example.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="passwordInput">Password</label>
+                                <input type="password" class="form-control" name="passwordInput" id="passwordInput" placeholder="Password">
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                        <br>
+                        <a href="register" type="submit" class="btn btn-secondary">Register instead</a>
+                        
+                    </div>
+                </div>
+        </main>
+
+        {% include '_base_footer.html' %}
+    </div>
+
+</body>
+
+</html>

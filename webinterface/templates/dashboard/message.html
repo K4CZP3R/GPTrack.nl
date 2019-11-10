@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+{% with title="Message" %}
+{% include '_base_head.html' %}
+{% endwith %}
+
+<head>
+    <meta http-equiv="refresh" content="{{r_time}}; url={{r_url}}" />
+</head>
+
+<body class="text-center">
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+        {% include '_base_header.html' %}
+
+        <main role="main" class="inner cover">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Message</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{title}}</h5>
+                    <p class="card-text">{{content}}</p>
+                </div>
+            </div>
+        </main>
+
+        {% include '_base_footer.html' %}
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+{% with title="Tracker - Manage" %}
+{% include '_base_head.html' %}
+{% endwith %}
+
+<body class="text-center">
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+        {% include '_base_header.html' %}
+
+        <main role="main" class="inner cover">
+            <div class="card-group">
+
+                <div class="card text-white bg-dark mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Paired GPTrackers</h5>
+                        <p class="card-text">Here you can (un)pair GPTrackers</p>
+                    </div>
+                </div>
+            </div>
+
+            {% for r in gp_trackers_unified %}
+            <div class="card-group">
+                <div class="card text-white bg-dark mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{r['device']['name']}}</h5>
+                        <a class="far fa-trash-alt" href="{{edit_url}}/{{r['uuid']}}/unregister"></a>
+                        <p class="card-text">{{r['device']['uuid']}}</p>
+                        <br>
+                        <p class="card-text">
+                            Last HR: {{r['data']['hr']}} <br/>
+                            Last GPS: {{r['data']['gps']}}
+                         </p>
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+
+        </main>
+        {% include '_base_footer.html' %}
+    </div>
+</body>
+
+</html>

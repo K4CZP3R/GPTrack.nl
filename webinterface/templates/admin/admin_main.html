@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+{% with title="Admin" %}
+{% include '_base_head.html' %}
+{% endwith %}
+
+<body class="text-center">
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+        {% include '_base_header.html' %}
+
+        <main role="main" class="inner cover">
+            <div class="card-group">
+                <div class="card text-white bg-dark mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Admin Panel</h5>
+                        <a href="/admin/trackers" class='btn btn-primary'>Trackers</a>
+                        <a href="/admin/users" class="btn btn-primary">Users</a>
+                    </div>
+                </div>
+
+            </div>
+            
+        </main>
+
+        {% include '_base_footer.html' %}
+    </div>
+</body>
+
+</html>

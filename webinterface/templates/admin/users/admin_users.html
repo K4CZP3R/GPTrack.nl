@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+{% with title="Admin - Users" %}
+{% include '_base_head.html' %}
+{% endwith %}
+
+<body class="text-center">
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+        {% include '_base_header.html' %}
+
+        <main role="main" class="inner cover">
+
+            <table class="table text-white bg-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">uuid</th>
+                        <th scope="col">name</th>
+                        <th scope="col">email</th>
+                        <th scope="col">hash (8)</th>
+                        <th scopt="col">GPTrackers</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for u in unified %}
+                    <tr>
+                        <th>{{u['user']['uuid']}}</th>
+                        <th>{{u['user']['name']}}</th>
+                        <th>{{u['user']['email']}}</th>
+                        <th>{{u['user']['hash'][:8]}}...</th>
+                        <th>
+                            {% for d in u['devices'] %}
+                            <a href="trackers/edit/{{d['uuid']}}">{{d['uuid']}}</a>,
+                            {% endfor %}
+                        </th>
+                        <th>
+                            <a href="users/delete/{{u['user']['uuid']}}" class="far fa-trash-alt"></a>
+                            <a href="users/edit/{{u['user']['uuid']}}" class="far fa-edit"></a>
+                        </th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+        </main>
+        {% include '_base_footer.html' %}
+    </div>
+</body>
+
+</html>

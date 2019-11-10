@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+{% with title="Dashboard" %}
+{% include '_base_head.html' %}
+{% endwith %}
+
+<body class="text-center">
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+        {% include '_base_header.html' %}
+
+        <main role="main" class="inner cover">
+            <div class="card-group">
+                <div class="card text-white bg-dark mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Dashboard</h5>
+                        <p class="card-text">email: {{name}}</p>
+                        <a href="/dashboard/reminders" class='btn btn-primary'>Reminders</a>
+                        <a href="/track" class="btn btn-primary">Paired GPTrackers</a>
+                        <a href="/auth/logout" class="btn btn-primary">Logout</a>
+                    </div>
+                </div>
+
+            </div>
+            {% for r in gp_trackers_unified %}
+            <div class="card-group">
+                <div class="card text-white bg-dark mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5>{{r['device']['name']}}</h5>
+                        <div id="map_{{r['device']['uuid']}}" style="height: 300px;"></div>
+                        <p class="card-text">
+                            HR: <a id="hr_{{gp_trackers_unified.index(r)}}">{{r['data']['hr']}}</a><br />
+                            GPS: <a id="gps_{{gp_trackers_unified.index(r)}}">{{r['data']['gps']}}</a><br />
+                            Laatste update: {{r['data']['last_update']}}
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </main>
+        {% for r in gp_trackers_unified %}
+        <script>
+            var map_{{ gp_trackers_unified.index(r)}} = L.map("map_{{r['device']['uuid']}}").setView([51.505, 5.1], 13);
+            var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            var osmAttrib = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+            var osm = new L.TileLayer(osmUrl, { minZoom: 8, maxZoom: 18, attribution: osmAttrib });
+            // start the map in South-East England
+            map_{{ gp_trackers_unified.index(r) }}.setView(new L.LatLng(51.538, 5.079), 16);
+            map_{{ gp_trackers_unified.index(r) }}.addLayer(osm);
+            marker_{{gp_trackers_unified.index(r)}} = false;
+
+            function update_{{ gp_trackers_unified.index(r) }}() {
+                $.getJSON('/track/api/get_data/{{r["device"]["uuid"]}}/hr', function(data){
+                    console.log("success on {{r['device']['uuid']}}?: "+ data.success);
+                    let hr_resp = data.data;
+                    console.log("response is " + hr_resp);
+
+                    document.getElementById("hr_{{gp_trackers_unified.index(r)}}").innerHTML = data.data;
+
+                })
+                $.getJSON('/track/api/get_data/{{r["device"]["uuid"]}}/gps', function (data) {
+
+                    //data is the JSON string
+                    console.log("success on {{r['device']['uuid']}}?: " + data.success);
+                    let response = data.data;
+                    console.log("reponse is: " + response)
+                    let c1 = parseFloat(response.split(",")[0]);
+                    let c2 = parseFloat(response.split(",")[1]);
+
+                    console.log("Lat: " + c1);
+                    console.log("Lon: " + c2);
+                    //51.538467, 5.079549
+                    if(marker_{{gp_trackers_unified.index(r)}}){
+                        map_{{gp_trackers_unified.index(r)}}.removeLayer(marker_{{gp_trackers_unified.index(r)}});
+                    }
+                    marker_{{gp_trackers_unified.index(r)}} = L.marker([c1, c2]).addTo(map_{{ gp_trackers_unified.index(r) }}) //hardcoded
+                    map_{{gp_trackers_unified.index(r)}}.panTo(new L.LatLng(c1,c2));
+                    document.getElementById("gps_{{gp_trackers_unified.index(r)}}").innerHTML = data.data;
+                    
+
+            });
+            }
+
+            setInterval(update_{{gp_trackers_unified.index(r)}}, 2500);
+
+
+
+        </script>
+        {% endfor %}
+
+        {% include '_base_footer.html' %}
+    </div>
+</body>
+
+</html>

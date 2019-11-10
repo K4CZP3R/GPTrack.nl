@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+{% with title="Admin - Trackers" %}
+{% include '_base_head.html' %}
+{% endwith %}
+
+<body class="text-center">
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+        {% include '_base_header.html' %}
+
+        <main role="main" class="inner cover">
+            <div class="card-group">
+
+                <div class="card text-white bg-dark mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <form method="POST" action="trackers/add">
+
+                            <div class="form-group">
+                                <label for="uuidInput">UUID</label>
+                                <input type="text" class="form-control" name="uuidInput" id="uuidInput" placeholder="">
+                                <small id="uuidHelp" class="form-text text-muted">(Hetzelfde als in arduino
+                                    sketch)</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nameInput">Name</label>
+                                <input type="text" class="form-control" name="nameInput" id="nameInput" placeholder="">
+                                <small id="nameHelp" class="form-text text-muted">Friendly name</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ownerUuidInput">Owner UUID</label>
+                                <input type="text" class="form-control" name="ownerUuidInput" id="ownerUuidInput"
+                                    placeholder="">
+                                <small id="ownerUuidHelp" class="form-text text-muted">Eigenaar van deze
+                                    GPTracker</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{trackers}}
+
+
+            <table class="table text-white bg-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">uuid</th>
+                        <th scope="col">name</th>
+                        <th scope="col">owner_uuid</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tracker in trackers %}
+                    <tr>
+                        <th>{{tracker['uuid']}}</th>
+                        <th>{{tracker['name']}}</th>
+                        <th><a href="users/edit/{{tracker['owner_uuid']}}">{{tracker['owner_uuid']}}</a></th>
+                        <th>
+                            <a href="trackers/delete/{{tracker['uuid']}}" class="far fa-trash-alt"></a>
+                            <a href="trackers/edit/{{tracker['uuid']}}" class="far fa-edit"></a>
+
+
+                        </th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+        </main>
+        {% include '_base_footer.html' %}
+    </div>
+</body>
+
+</html>

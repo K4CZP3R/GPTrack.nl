@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+{% with title="Admin - Edit Users" %}
+{% include '_base_head.html' %}
+{% endwith %}
+
+<body class="text-center">
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+        {% include '_base_header.html' %}
+
+        <main role="main" class="inner cover">
+            <div class="card-group">
+
+                <div class="card text-white bg-dark mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <form method="POST" action="{{user['uuid']}}/update">
+                            {{user}}
+                            <div class="form-group">
+                                <label for="nameInput">Name</label>
+                                <input type="text" class="form-control" name="nameInput" id="nameInput"
+                                    placeholder="Name" value="{{user['name']}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emailInput">E-mail</label>
+                                <input type="text" class="form-control" name="emailInput" id="emailInput"
+                                    placeholder="Email" value="{{user['email']}}">
+                            </div>
+
+                            <!--<div class="form-group">
+                                <label for="uuidInput">UUID</label>
+                                <input type="text" class="form-control" name="uuidInput" id="uuidInput"
+                                    placeholder="Uuid" value="{{user['uuid']}}">
+                                <small id="uuidHelp" class="form-text text-muted">Changing this value will **destroy** every link between GPTrack and old UUID!</small>
+
+                            </div>-->
+
+
+
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+        {% include '_base_footer.html' %}
+    </div>
+</body>
+
+</html>

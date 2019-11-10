@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+{% with title="Map" %}
+{% include '_base_head.html' %}
+{% endwith %}
+
+<body class="text-center">
+    <div class="cover-container container d-flex h-100 p-3 mx-auto flex-column">
+        {% include '_base_header.html' %}
+        <main role="main" class="inner cover">
+
+            {% for route in links %}
+            <h1 class="cover-heading">Routes for {{route}}</h1>
+            <table class="table table-striped table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">route name</th>
+                        <th scope="col">route url</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in links[route] %}
+                    <tr>
+                        <th scope="row">
+                            {{r[1]}}
+                        </th>
+                        <th>
+                            <a href="{{r[0]}}">{{r[0]}}</a>
+                        </th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endfor %}
+        </main>
+        {% include '_base_footer.html' %}
+    </div>
+</body>
+
+</html>
